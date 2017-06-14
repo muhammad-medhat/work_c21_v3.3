@@ -1,0 +1,14 @@
+to install
+######################################################################
+####install addon for firefox seamles print to print automatic without preview window
+####-------------------------
+####create a form for all open types of orders
+####ie current open orders, closed orders
+##################################################################3
+admin/product/assign_grid1 done
+create images for delete and minus icon in orderdetails form to perform in hover
+check for open orders in closing shift
+==========================================================
+create  order/show_order like the one report/show_order
+==========================================================
+dont cancel the order without a password for cancel
