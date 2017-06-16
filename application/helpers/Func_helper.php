@@ -68,7 +68,7 @@ function cmp_cat_id($a, $b)
       $ci =& get_instance(); 
       if( $controller == $ci->router->fetch_class()){
 
-            $class = ' active-tab';
+            $class .= ' active-tab';
       }
       $ret .= "<$el class='$class'>" .anchor($u, $name, "class='$class'") ."</$el>";    
     }

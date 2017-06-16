@@ -17,9 +17,7 @@ $this->load->view($subdir .'/password_view');
 //shows order of a table
 //order id must be provided
 ?>
-      <div id='numpad-container' style='z-index:500' class='fr td'>
-        <?php $this->load->view('app/orders/numpad'); ?>
-      </div>
+
 
     <div class='div'>
 
@@ -27,8 +25,9 @@ $this->load->view($subdir .'/password_view');
         <div id='order_type' class='td'>
               <?php $this->load->view($subdir .'/order_type', $this->data)?>
         </div>
-         <div id='order_tools' class='td'>
+         <div id='order_tools' class='td fr'>
                <?php $this->load->view($subdir .'/order_tools')?>
+               <?php $this->load->view($dir .'/side_tools')?>
          </div>
       </div>
 
@@ -85,27 +84,31 @@ $this->load->view($subdir .'/password_view');
   });
 
   function add_product(p_id, num){
-    $.ajax({
-      url: '<?= site_url("order/add_product/$order_id")?>/' + p_id + '/' + num,
-      type: 'POST',
-      complete: function (jqXHR, textStatus) {
-        // callback
-      },
-      success: function (data, textStatus, jqXHR) {
-        //alert(data);// alerts the order_details id, will be used in assigning an id for the row inserted 
-        var tr = adding_row(p_id, $('#product_name').text(),num,  $('#price_hidden').val(), data);
-       $('#order_details_tbody').append(tr); 
-        $('#no_orders').remove();
-        //update total
-        update_all();
-        $('#order_details_table').show();
-        $("#order_details_container").animate({ scrollTop: $('#order_details_container').prop("scrollHeight")}, 1000);
-      },
-      error: function (jqXHR, textStatus, errorThrown) {
-        // error callback
-        alert(errorThrown);
-      }
-    });
+    if(p_id)
+    {
+       $.ajax({
+         url: '<?= site_url("order/add_product/$order_id")?>/' + p_id + '/' + num,
+         type: 'POST',
+         complete: function (jqXHR, textStatus) {
+           // callback
+         },
+         success: function (data, textStatus, jqXHR) {
+           //alert(data);// alerts the order_details id, will be used in assigning an id for the row inserted 
+           var tr = adding_row(p_id, $('#product_name').text(),num,  $('#price_hidden').val(), data);
+          $('#order_details_tbody').append(tr); 
+           $('#no_orders').remove();
+           //update total
+           update_all();
+           $('#order_details_table').show();
+           $("#order_details_container").animate({ scrollTop: $('#order_details_container').prop("scrollHeight")}, 1000);
+           $('#num').val(0);
+         },
+         error: function (jqXHR, textStatus, errorThrown) {
+           // error callback
+           alert(errorThrown);
+         }
+       });
+    }
   }
   /*
   function update_qty(){

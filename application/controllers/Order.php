@@ -9,9 +9,9 @@ class Order extends Frontend_Controller {
     $this->load->model(
       array('shift_model', 'order_details_model', 'product_items_model', 'stock_items_model', 'table_model'));
     $this->output->enable_profiler(false);
-
+    
     $this->views_folder  = 'app/orders/';
-    $this->data['sidebar'] = 'app/orders/main_sidebar';
+    $this->data['sidebar'] = $this->views_folder .'main_sidebar';
 
     if($this->session->userdata('shift_id') == '')
       redirect('shift');
@@ -40,7 +40,7 @@ class Order extends Frontend_Controller {
 
   function new_order2($order_type){
     // that is an ordinary order
-    // can be for non dinein orders
+    // can be for non dine_in orders
     $shift_id = $this->session->userdata('shift_id');
     $this->order_model->create_order(0, $shift_id, $order_type);
 
@@ -56,9 +56,17 @@ class Order extends Frontend_Controller {
   /**/    /**************************************************/
   /**/    $order_shift = $this->shift_model->get($order->shift_id);
   /**/    $order->shift_date = $order_shift->date;
-          $this->e_order($order);
+  /**/    $this->e_order($order);
   /**/  }
-        function e_order($order){
+  /**/  function edit($table_id, $new_table=false){
+  /**/    //this function gets the current order at the given table
+  /**/    /********************************************************/
+  /**/    /**/$order = $this->order_model->get_order($table_id);/**/
+  /**/    /********************************************************/
+  /**/    $this->e_order($order);
+  /**/  }
+  /**/  function e_order($order){
+  /**/    $this->template = 'template/orders_template/index';
   /**/    if($order){
   /**/      $table = $this->order_model->get_table($order->customer_id);
   /**/      $order->order_id = $order->id; //because we use it in the function edit
@@ -69,21 +77,11 @@ class Order extends Frontend_Controller {
   /**/      $this->data['tables']         = $this->table_model->get_free();
   /**/      $this->data['order_details']  = $order_details;
   /**/      $this->data['order_types']    = $this->order_model->get_order_types();      
-  /**/      $this->data['sidebar'] = 'app/orders/sidebar';
-  /**/      $this->_display_view('order_details', 'الفواتير');
+  /**/      $this->data['sidebar'] = $this->views_folder .'numpad';
+  /**/      $this->display_view($this->views_folder .'order_details', 'الفواتير');
   /**/    } else
   /**/       show_error('No Order Found', '404', $heading = 'An Error Was Encountered');
         }
-  /**/
-  /**/
-  /**/  function edit($table_id, $new_table=false){
-  /**/    //this function gets the current order at the given table
-  /**/
-  /**/    /********************************************************/
-  /**/    /**/$order = $this->order_model->get_order($table_id);/**/
-  /**/    /********************************************************/
-          $this->e_order($order);
-  /**/  }
   /*******************************************************************************************/
   function change_type($order_id, $type_id){
     $this->order_model->change_type($order_id, $type_id);
@@ -95,7 +93,6 @@ class Order extends Frontend_Controller {
     //$this->data['sidebar'] = 'app/orders/sidebar';
     
     $order = $this->order_model->get($order_id);
-//
     if($order){
         $table = $this->table_model->get($order->customer_id);
         $order_details = $this->order_details_model->get_order_details($order_id);
@@ -286,13 +283,13 @@ redirect('order');
 
   }
   
-  
+  /*
   function _display_view($view, $subtitle){
     $this->data["subtitle"] = $subtitle;
     $this->data['main_content'] = $this->views_folder .$view;
     $this->load->view($this->template, $this->data);
   }
-
+   */
   function get_orders($is_checked=2, $limit=100){
     if( $this->input->post('ordersnum') !== null)
       $limit = $this->input->post('ordersnum');
@@ -305,7 +302,7 @@ redirect('order');
     $this->data['is_checked'] = $is_checked;
     $this->data['orders'] = $orders;
     $subtitle = $this->get_name($is_checked);
-    $this->_display_view('orders', $subtitle);
+    $this->display_view($this->views_folder .'orders', $subtitle);
   }
   
   function get_name($is_checked){

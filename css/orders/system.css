@@ -1,0 +1,58 @@
+
+#all_tables, #all_products{
+  padding:10px;
+  float:right
+}
+#all_tables{width:80%}
+
+#all_tables div{
+  display:inline;
+}
+#all_tables .table, #all_products .product{
+    padding: 0px;
+    float: right;
+    width: 5em;
+    height: 5em;
+    margin: 1px;
+    vertical-align: top
+}
+#all_products .product{
+  border: solid 1px;
+  background-color: #C0BABA;
+}
+#all_products button{font-size:20px}
+#all_products .product:hover{
+  background-color: #E6C6CB;
+}
+#all_tables a div{padding-top:10px;font-size:1em}
+.products_list{display:block;margin-top:1em;clear:both}
+#product_name{height:22px} /*numpad*/
+
+#order_details_container{overflow:hidden;margin: 1% 0 0 0;width: 50%;height: 200px;}
+#order_details_container:hover{overflow-y:auto}
+
+.order_details_table{border-collapse: collapse;width: 100%;height: 200px;}
+/*.order_details_table .header{background-color:#c0c0c0;font-weight:bold}*/
+.order_details_table tr{height:2em}
+.order_details_table td{text-align:left;padding:4px 2px 0 0}
+.order_details_table td:first-child{text-align:right;white-space:nowrap}
+
+.order_details_table .tfoot{font-weight:bold}
+.order_details_table .tfoot td{padding-top:15px}
+
+#order_summery{margin:1em}
+#order_summery .header{border:solid 1px;padding: 0.5em;margin:1em}
+
+
+#all_tables a{color:#fff;display:block}
+#all_tables .yes{background-color: #8ED18E;}
+#all_tables .yes .head{}
+
+#all_tables .no{background-color: #000;color:#fff}
+#all_tables .no a{color:#fff}
+#all_tables .no .head{}
+#all_tables .table{width:3em;height:2em;padding:3% 2%;}
+
+@-moz-document url-prefix() { 
+#order_summery{vertical-align:top ;}
+}

@@ -29,8 +29,7 @@ class Shift extends Frontend_Controller {
   }
 
   function new_shift(){
-    $shift_id = $this->session->get_userdata('shift_id');
-    //var_dump($this->session->userdata);
+    $shift_id = $this->session->userdata('shift_id');
     if(!$this->has_open_orders($shift_id)){
 
        //$this->session->set_flashdata('warning', $this->db->last_query());  
