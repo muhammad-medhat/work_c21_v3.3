@@ -35,9 +35,16 @@
       $(document).ready(function(){
 
         $('#header-with-tabs').hide();
-        //$('#content').hover(function(){
+        
+        // show/hide the menubar
         $('.content-module-heading').mouseenter(function(){
-          $('#header-with-tabs').show(500);
+          var el = '#header-with-tabs';
+          var duration = 500;
+          var hid = $('#header-with-tabs').css('display');
+          if(hid == 'block')
+            $(el).hide(duration);
+          else
+            $(el).show(duration);
         });
       })
 </script>
