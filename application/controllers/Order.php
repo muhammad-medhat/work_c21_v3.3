@@ -63,7 +63,7 @@ class Order extends Frontend_Controller {
   /**/    /********************************************************/
   /**/    /**/$order = $this->order_model->get_order($table_id);/**/
   /**/    /********************************************************/
-  /**/    $this->e_order($order);
+  /**/    $this->edit_order($order->id);
   /**/  }
   /**/  function e_order($order){
   /**/    $this->template = 'template/orders_template/index';
@@ -74,7 +74,11 @@ class Order extends Frontend_Controller {
   /**/      $this->data['order']          = $order;
   /**/      $this->data['order_id']       = $order->id;    
   /**/      $this->data['table']          = $table;
-  /**/      $this->data['tables']         = $this->table_model->get_free();
+
+  /**/      $this->data['tables_s']       = $this->table_model->get_free();
+  /**/      $this->data['sections']       = $this->table_model->get_sections();
+  /**/      $this->data['tables']         = $this->table_model->get_free1();
+  
   /**/      $this->data['order_details']  = $order_details;
   /**/      $this->data['order_types']    = $this->order_model->get_order_types();      
   /**/      $this->data['sidebar'] = $this->views_folder .'numpad';
@@ -265,22 +269,43 @@ redirect('order');
    // var_dump($this->settings_model->get());
   }
 
+  function change_table_id($order_id, $table_to){
+      $this->db->trans_start();
+
+      $order = $this->order_model->get($order_id);
+      if($order){
+        var_dump($order);
+      $this->order_model->free_table($order->customer_id); echo '<br>' .$this->db->last_query();  
+      $this->order_model->occupy_table($table_to);    echo '<br>' .$this->db->last_query();  
+ 
+      $this->order_model->save( array('customer_id'=>$table_to), $order_id );echo '<br>' .$this->db->last_query();  
+
+    }
+    $this->db->trans_complete();
+
+  }
+
   function change_table($t_from, $t_to){
     $this->db->trans_start();
 
     $order = $this->order_model->get_order($t_from);
     if($order){
       $this->order_model->save( array('customer_id'=>$t_to), $order->order_id );
-      $this->order_model->free_table($t_from);
-      $this->order_model->occupy_table($t_to);
+      $this->order_model->free_table($t_from);                                 
+      $this->order_model->occupy_table($t_to);                                
     }
     $this->db->trans_complete();
   }
 
   function change_table_orderid($order_id, $t_to){
-      $this->order_model->save( array('customer_id'=>$t_to), $order_id );
-      $this->order_model->occupy_table($t_to);
-
+    echo "<h1>change with orderid funcrion </h1>";
+    $this->db->trans_start();
+        $order = $this->order_model->get($order_id);
+        $this->order_model->save( array('customer_id'=>$t_to), $order_id );
+        $this->order_model->occupy_table($t_to);
+        $this->order_model->free_table($order->customer_id);
+    $this->db->trans_complete();
+       // $this->index();
   }
   
   /*

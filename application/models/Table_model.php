@@ -10,13 +10,21 @@ class Table_model extends MY_Model {
   function __construct(){
     parent::__construct();
   }
-
-  function get_free(){
+  function get_free1(){
+    //get tavle names only
     return $this->db->where('is_available', 1)
       ->get($this->_table_name)
       ->result();
   }
-
+  
+  function get_free(){
+    //get tavle name and section name
+    return $this->db->select("c.id,concat( s.name,  '-', c.name) as name ")->
+      from("$this->_table_name  c")->
+      join('customers_sections s', 's.id=c.section_id')->
+      where('is_available', 1)->get()->result();
+  }
+   
   function get_sections(){
     return $this->db->get('customers_sections')->result();
   }

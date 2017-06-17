@@ -2,6 +2,7 @@
 
 $sum = 0;//this variable calculated with javascript
 
+$this->table->add_row(array('data'=>"مسلسل الفاتورة:you  can provide the order code $order_id", 'colspan'=>2, 'class'=>'header'));
 $this->table->add_row(array('data'=>"رقم الفاتورة: $order_id", 'colspan'=>2, 'class'=>'header'));
 
 $this->table->add_row('اجمالي',array('data'=>$sum, 'class'=>'sum'));

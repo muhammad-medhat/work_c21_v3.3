@@ -87,7 +87,7 @@ class Order_model extends MY_Model {
     //then i would like to occupy the table
     //(the table will not be available)
     if($this->check_table($table_id)){
-      $this->db->where(customers__is_available, 1);
+      //$this->db->where(customers__is_available, 1);
       $this->db->where(customers__id, $table_id);
       $this->db->update($this->customers_table, array(customers__is_available=>$set_available));
 

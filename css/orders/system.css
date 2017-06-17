@@ -1,3 +1,4 @@
+/*this will be applied in the order_details view only*/
 
 #all_tables, #all_products{
   padding:10px;
@@ -51,8 +52,11 @@
 #all_tables .no{background-color: #000;color:#fff}
 #all_tables .no a{color:#fff}
 #all_tables .no .head{}
-#all_tables .table{width:3em;height:2em;padding:3% 2%;}
+#all_tables .table{width:3em;height:2em;padding:3% 2%;border:solid 1px;cursor:pointer}
+#all_tables .table:hover{background-color:#635555}
+#all_products #tabs li a {
 
+    }
 @-moz-document url-prefix() { 
 #order_summery{vertical-align:top ;}
 }

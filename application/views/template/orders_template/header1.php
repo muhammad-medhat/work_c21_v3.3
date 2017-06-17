@@ -33,16 +33,19 @@
 </style>
 <script>
       $(document).ready(function(){
+          var duration = 500;
 
         $('#header-with-tabs').hide();
+        $('.div').hover(function(){
+          $('#header-with-tabs').hide(duration);
+        });
         
         // show/hide the menubar
         $('.content-module-heading').mouseenter(function(){
           var el = '#header-with-tabs';
-          var duration = 500;
           var hid = $('#header-with-tabs').css('display');
           if(hid == 'block')
-            $(el).hide(duration);
+            $(el).hide(duration * 2 );
           else
             $(el).show(duration);
         });
