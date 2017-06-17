@@ -4,6 +4,7 @@ composer.json
 contributing.md 
 licence.txt 
 user_guide
+applifation/invoice
 *.swp
 
 application/cache/*

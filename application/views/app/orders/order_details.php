@@ -57,6 +57,30 @@ $this->load->view($subdir .'/tables_list');
 
 <script type="text/javascript" charset="utf-8">
   $(document).ready(function () {
+  function add_product(p_id, num){
+    $.ajax({
+      url: '<?= site_url("order/add_product/$order_id")?>/' + p_id + '/' + num,
+      type: 'POST',
+      complete: function (jqXHR, textStatus) {
+        // callback
+      },
+      success: function (data, textStatus, jqXHR) {
+        //alert(data);// alerts the order_details id, will be used in assigning an id for the row inserted 
+        var tr = adding_row(p_id, $('#product_name').text(),num,  $('#price_hidden').val(), data);
+       $('#order_details_tbody').append(tr); 
+        $('#no_orders').remove();
+        //update total
+        update_all();
+        $('#order_details_table').show();
+        $("#order_details_container").animate({ scrollTop: $('#order_details_container').prop("scrollHeight")}, 1000);
+      },
+      error: function (jqXHR, textStatus, errorThrown) {
+        // error callback
+        alert(errorThrown);
+      }
+    });
+  }
+    
     update_all();
     
       $('#all_products').on('click', '.product',function(){
@@ -75,8 +99,26 @@ $this->load->view($subdir .'/tables_list');
         var p_id = $('.product_selected').attr('data-id');
         add_product(p_id, num);
       });
+    $('.category').click(function(){
+      $('.cat a').removeClass('active-tab')
+      $(this).addClass('active-tab');
+      var id = this.dataset.id;
 
+      $.ajax({
+        url: '<?=site_url('product/ajax_category_products')?>/' + id,
+        type: 'POST',
+        complete: function (jqXHR, textStatus) {
+          // callback
+        },
+        success: function (data, textStatus, jqXHR) {
+          $('.products_list').html(data);
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+          alert(errorThrown);
+        }
+      });
 
+    });
 <?php if($order->customer_id!=0) { ?>
   $('#change_table, #change_table_div').click(function(){
     var to  = $('#table_id').val();
