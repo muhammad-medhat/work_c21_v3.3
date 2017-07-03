@@ -23,21 +23,21 @@ class Settings extends Frontend_Controller {
      $this->load->view("$this->template", $this->data);  
   }
   function update_settings(){
-    //$vars = array_keys($this->data['settings']);
-var_dump($_POST);
-    //$values = $this->settings_model->array_from_post('id[]', 'name[]', 'chk[]');
-   foreach ($this->input->post('id') as $key=>$value) {
+//var_dump($_POST);
+foreach ($this->input->post('id') as $key=>$sid) {
 
      $val = $this->input->post("val[$key]");
-     $chk = $this->input->post("chk[$value]");
-
+     
+     $chk = $this->input->post("val[$sid]");
      $enabled = isset($chk)? 1 : 0;
 
      $arr = array('value'=>$val);
 
-     $this->settings_model->save($arr, $value);
-     echo "============update set value = val[$key] where id= $value<br> " ;
-     echo $this->db->last_query().'<br />';
+     $this->settings_model->save($arr, $sid);
+     $this->session->set_flashdata('message', 'تم حفظ الاعدادات');
+     $this->index();
+     //echo "============update set value = val[$key] where id= $key<br> " ;
+     //echo $this->db->last_query().'<br />';
    }
   }
 
