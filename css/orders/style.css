@@ -310,6 +310,7 @@ p a, p a:hover { border-bottom: none;/*1px dotted; }*/}
 	display: inline-block;
 	text-decoration: none;
 	background-repeat: no-repeat;
+  cursor:pointer
 }
 
 .dark {
